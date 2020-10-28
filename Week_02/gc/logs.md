@@ -7,27 +7,25 @@
     正在执行...
     Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
             at java.util.Arrays.copyOfRange(Unknown Source)
-          at java.lang.String.<init>(Unknown Source)
+            at java.lang.String.<init>(Unknown Source)
             at java.lang.StringBuilder.toString(Unknown Source)
-        at GCLogAnalysis.generateGarbage(GCLogAnalysis.java:58)
+            at GCLogAnalysis.generateGarbage(GCLogAnalysis.java:58)
             at GCLogAnalysis.main(GCLogAnalysis.java:25)
-```
+    ```
     
-[gc.serial128.log](gc.serial128.log)
+    [gc.serial128.log](gc.serial128.log)
     
+    - 256m
   
-    
-  - 256m
+      ```powershell
+      java -XX:+UseSerialGC -Xms256m -Xmx256m -Xloggc:gc.serial256.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps GCLogAnalysis
+      正在执行...
+      执行结束!共生成对象次数:4680
+      ```
   
-  ```powershell
-    java -XX:+UseSerialGC -Xms256m -Xmx256m -Xloggc:gc.serial256.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps GCLogAnalysis
-  正在执行...
-    执行结束!共生成对象次数:4680
-  ```
+      [gc.serial256.log](gc.serial256.log)
   
-  [gc.serial256.log](gc.serial256.log)
-  
-    
+      
   
   - 512m
   
@@ -36,10 +34,10 @@
     正在执行...
     执行结束!共生成对象次数:10064
     ```
-
+  
     [gc.serial512.log](gc.serial512.log)
 
-    
+
 
 - 并行 GC
 
