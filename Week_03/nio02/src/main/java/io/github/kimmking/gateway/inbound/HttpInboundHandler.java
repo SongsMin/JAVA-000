@@ -1,5 +1,7 @@
 package io.github.kimmking.gateway.inbound;
 
+import io.github.kimmking.gateway.filter.HttpRequestFilter;
+import io.github.kimmking.gateway.filter.SimpleFilter;
 import io.github.kimmking.gateway.outbound.okhttp.OkhttpOutboundHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -14,11 +16,13 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
     private final String proxyServer;
 //    private HttpOutboundHandler handler;
     private OkhttpOutboundHandler handler;
+    private HttpRequestFilter filter;
     
     public HttpInboundHandler(String proxyServer) {
         this.proxyServer = proxyServer;
 //        handler = new HttpOutboundHandler(this.proxyServer);
         handler = new OkhttpOutboundHandler(this.proxyServer);
+        filter = new SimpleFilter("SongsMin");
     }
     
     @Override
@@ -38,6 +42,7 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
 //            }
     
             handler.handle(fullRequest, ctx);
+            filter.filter(fullRequest, ctx);
     
         } catch(Exception e) {
             e.printStackTrace();
